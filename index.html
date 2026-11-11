@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Converter Physical Drop Box</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">⇧</div>
+      <div>
+        <h1>File Converter Physical Drop Box</h1>
+        <p>One button. Cloud conversion. Instant confirmation.</p>
+      </div>
+    </div>
+    <button id="pressBtn" class="primary">● PRESS TO CONVERT</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">IOT + SERVERLESS • AWS LEARNER LAB</p>
+        <h2>Your files, converted automatically.</h2>
+        <p>Press the virtual button to send a CSV file for conversion to JSON.</p>
+      </div>
+      <div class="connection-pill" id="connectionPill"><span></span><b id="connectionText">Demo mode ready</b></div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card"><span class="stat-icon purple">⇄</span><div><p>Files Converted</p><strong id="totalFiles">0</strong><small>Successful conversions</small></div></article>
+      <article class="stat-card"><span class="stat-icon green">✓</span><div><p>Successful Jobs</p><strong id="successJobs">0</strong><small>Completed successfully</small></div></article>
+      <article class="stat-card"><span class="stat-icon orange">◷</span><div><p>Last Conversion</p><strong id="lastTime">—</strong><small>Local time</small></div></article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel drop-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">STEP 01</p><h3>Drop your CSV file</h3></div>
+          <span class="tag">CSV → JSON</span>
+        </div>
+        <label class="drop-zone" id="dropZone" for="csvInput">
+          <span class="upload-icon">⇧</span>
+          <strong id="fileLabel">Choose a CSV file or drag it here</strong>
+          <small>CSV files only • Or use the built-in sample file</small>
+          <input type="file" id="csvInput" accept=".csv,text/csv">
+        </label>
+        <div class="file-actions">
+          <button class="secondary" id="sampleBtn">Use sample CSV</button>
+          <span id="fileInfo">No file selected</span>
+        </div>
+        <div class="button-explain">
+          <div class="physical-button">●</div>
+          <div><b>Physical drop box button</b><p>The ESP32 push button can perform the same action. This virtual button is used for the web demo.</p></div>
+        </div>
+        <button id="convertBtn" class="convert-button">PRESS TO CONVERT <span>→</span></button>
+        <p class="hint">The demo runs in your browser. Connect your API Gateway URL in <code>script.js</code> to use AWS.</p>
+      </article>
+
+      <article class="panel process-panel">
+        <div class="panel-heading"><div><p class="eyebrow">STEP 02</p><h3>Conversion status</h3></div><span id="jobStatus" class="status-badge idle">IDLE</span></div>
+        <div class="pipeline">
+          <div class="process-step" id="stepButton"><span>1</span><b>Button</b><small>Press detected</small></div>
+          <div class="connector"></div>
+          <div class="process-step" id="stepLambda"><span>2</span><b>Lambda</b><small>Convert CSV</small></div>
+          <div class="connector"></div>
+          <div class="process-step" id="stepS3"><span>3</span><b>S3</b><small>Save JSON</small></div>
+        </div>
+        <div class="led-area">
+          <div class="led" id="led"></div>
+          <div><b id="ledTitle">LED is OFF</b><p id="ledMessage">The LED turns on when conversion is complete.</p></div>
+        </div>
+        <div class="status-message" id="statusMessage" role="status">Select a CSV file or use the sample, then press the button.</div>
+      </article>
+    </section>
+
+    <section class="panel result-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">STEP 03</p><h3>Converted JSON preview</h3></div>
+        <button id="downloadCurrent" class="secondary" disabled>↓ Download JSON</button>
+      </div>
+      <pre id="jsonPreview">Your converted JSON will appear here.</pre>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="panel-heading"><div><p class="eyebrow">S3 OUTPUT</p><h3>Conversion history</h3></div><button id="clearHistory" class="text-button">Clear history</button></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File name</th><th>Format</th><th>Status</th><th>Time</th><th>Action</th></tr></thead>
+          <tbody id="historyBody"><tr><td colspan="5" class="empty">No converted files yet.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="how panel">
+      <p class="eyebrow">SYSTEM FLOW</p><h3>How the physical drop box works</h3>
+      <div class="flow">
+        <div><span>1</span><b>Button press</b><small>ESP32 / Web button</small></div><i>→</i>
+        <div><span>2</span><b>API Gateway</b><small>HTTPS / IoT Core MQTT</small></div><i>→</i>
+        <div><span>3</span><b>AWS Lambda</b><small>CSV to JSON</small></div><i>→</i>
+        <div><span>4</span><b>Amazon S3</b><small>Input and output folders</small></div><i>→</i>
+        <div><span>5</span><b>LED ON</b><small>Done message received</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>File Converter Physical Drop Box • Cloud Computing Project • 2026</footer>
+  <script src="script.js"></script>
+</body>
+</html>
